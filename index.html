@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Creative Marketplace</title>
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui;
+scroll-behavior:smooth;
+}
+
+body{
+background:linear-gradient(180deg,#eaf2ff,#ffffff);
+color:#1f2937;
+transition:0.3s;
+}
+
+/* DARK MODE */
+body.dark{
+background:#0f172a;
+color:white;
+}
+
+body.dark .card, body.dark .form-box, body.dark .mitra-card{
+background:#1e293b;
+color:white;
+}
+
+body.dark .navbar{
+background:rgba(30,41,59,0.6);
+}
+
+body.dark .nav-links a{
+color:white;
+}
+
+body.dark .btn, body.dark .filter button{
+background:#60a5fa;
+}
+
+body.dark .mitra-card{
+background:#1f2937;
+}
+
+body.dark .mitra-section{
+background:linear-gradient(180deg,#1e293b,#111827);
+}
+
+/* Section detail modul default light mode */
+section[id^="detail-"] {
+  padding:80px 10%;
+  transition:0.3s;
+  text-align:center;
+  background: linear-gradient(180deg, #f0f9ff, #e0f2fe); /* light mode */
+}
+
+/* Dark mode untuk semua section detail modul */
+body.dark section[id^="detail-"] {
+  background: linear-gradient(180deg, #1e293b, #111827); /* dark mode gradient */
+  color: rgb(0, 0, 0);
+}
+
+/* Harga di dark mode */
+body.dark section[id^="detail-"] .price {
+  color: hsl(213, 100%, 50%);
+}
+
+/* Tombol order tetap kontras */
+body.dark section[id^="detail-"] .btn {
+  background:#0073ff;
+  color:white;
+}
+
+/* Dark mode Detail Mitra */
+body.dark section[id^="detail-Mitra"] {
+  background: linear-gradient(180deg, #1e293b, #111827);
+  color: #000000 !important; /* teks hitam default */
+}
+
+/* Judul & deskripsi tetap hitam */
+body.dark section[id^="detail-Mitra"] h2,
+body.dark section[id^="detail-Mitra"] p {
+  color: #000000 !important;
+}
+
+/* Harga tetap biru */
+body.dark section[id^="detail-Mitra"] .price {
+  color: #0073ff !important;
+}
+
+/* Tombol tetap kontras */
+body.dark section[id^="detail-Mitra"] .btn {
+  background:#0274ff;
+  color:white !important;
+}
+
+
+/* NAVBAR */
+.navbar{
+position:fixed;
+top:0;
+width:100%;
+padding:15px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+backdrop-filter:blur(12px);
+background:rgb(255, 255, 255);
+box-shadow:0 4px 20px rgba(0,0,0,0.08);
+z-index:1000;
+transition:0.3s;
+}
+
+.logo img{
+height:50px;
+}
+
+.nav-links{
+display:flex;
+gap:30px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:#1f2937;
+font-weight:500;
+transition:0.3s;
+}
+
+.menu-right{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+.hamburger{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+.dark-toggle{
+cursor:pointer;
+font-size:18px;
+}
+
+/* HERO */
+.hero{
+height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+background:linear-gradient(135deg,#2563eb,#60a5fa);
+color:white;
+}
+
+.hero h1{
+font-size:48px;
+margin-bottom:10px;
+}
+
+/* SECTION */
+.section{
+padding:100px 10%;
+}
+
+.title{
+text-align:center;
+font-size:32px;
+margin-bottom:40px;
+}
+
+/* FILTER */
+.filter{
+text-align:center;
+margin-bottom:30px;
+}
+
+.filter button{
+padding:8px 16px;
+margin:5px;
+border:none;
+background:#2563eb;
+color:white;
+border-radius:20px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.filter button:hover{
+opacity:0.8;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+}
+
+/* CARD */
+.card{
+background:white;
+border-radius:14px;
+padding:20px;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+transition:0.3s;
+text-align:center;
+}
+
+.card h3 a {
+  text-decoration: none; /* hilangkan underline default */
+  color: inherit; /* ikut warna text card (hitam di light mode, putih di dark mode) */
+  transition: color 0.3s;
+}
+
+.card h3 a:hover {
+  color: #2563eb; /* warna biru lembut saat hover */
+}
+
+.card:hover{
+transform:translateY(-10px);
+}
+
+.service-img{
+height:120px;
+background:#e5e7eb;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.price{
+color:#2563eb;
+font-weight:bold;
+margin:8px 0;
+}
+
+/* BUTTON */
+.btn{
+display:inline-block;
+margin-top:10px;
+padding:8px 15px;
+background:#2563eb;
+color:white;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn:hover{
+opacity:0.9;
+}
+
+/* FORM */
+.form-box{
+max-width:500px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:6px;
+border:1px solid #d1d5db;
+background:white;
+color:#1f2937;
+transition:0.3s;
+}
+
+body.dark input, body.dark select, body.dark textarea{
+background:#1e293b;
+color:white;
+border:1px solid #374151;
+}
+
+button.submit{
+margin-top:15px;
+width:100%;
+padding:12px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* MITRA */
+.mitra-section{
+padding:80px 10%;
+background:linear-gradient(180deg,#f0f9ff,#e0f2fe);
+transition:0.3s;
+text-align:center;
+}
+
+.mitra-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+justify-items:center; /* Center cards horizontally */
+}
+
+.mitra-card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
+text-align:center;
+transition:0.3s;
+width:220px;
+}
+
+.mitra-card h4 a {
+  text-decoration: none; /* hilangkan underline */
+  color: inherit; /* ikut warna teks card */
+  transition: color 0.3s;
+}
+
+.mitra-card h4 a:hover {
+  color: #2563eb; /* subtle hover */
+}
+
+.mitra-card:hover{
+transform:translateY(-6px);
+}
+
+/* Detail Mitra */
+section[id^="detail-Mitra"] {
+  padding:80px 10%;
+  text-align:left;
+  transition:0.3s;
+  background: linear-gradient(180deg,#f0f9ff,#e0f2fe);
+}
+
+body.dark section[id^="detail-Mitra"] {
+  background: linear-gradient(180deg,#1e293b,#111827);
+  color: white;
+}
+
+section[id^="detail-Mitra"] h2 {
+  font-size:36px;
+  font-weight:bold;
+  margin-bottom:20px;
+}
+
+section[id^="detail-Mitra"] p {
+  font-size:18px;
+  margin-bottom:10px;
+  line-height:1.6;
+}
+
+section[id^="detail-Mitra"] .price {
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:20px;
+  color:#2563eb;
+}
+
+section[id^="detail-Mitra"] .portfolio {
+  display:flex;
+  flex-direction:column; /* 3 dari atas ke bawah */
+  gap:10px;
+}
+
+section[id^="detail-Mitra"] .portfolio img {
+  width:100%;
+  border-radius:8px;
+}
+
+.mitra-card h4{
+margin-bottom:10px;
+}
+
+.stars{
+color:#fbbf24;
+margin-bottom:5px;
+}
+
+/* FOOTER */
+footer{
+background:#1f2937;
+color:white;
+padding:30px 10%;
+margin-top:40px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:10px;
+}
+
+footer .socials a{
+color:white;
+font-size:20px;
+margin:0 8px;
+transition:0.3s;
+}
+
+footer .socials a:hover{
+color:#60a5fa;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.nav-links{
+position:absolute;
+top:60px;
+left:0;
+width:100%;
+background:white;
+flex-direction:column;
+display:none;
+padding:20px;
+}
+
+.nav-links.show{
+display:flex;
+}
+
+.hamburger{
+display:block;
+}
+
+.hero h1{
+font-size:32px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+<div class="logo">
+<img src="Akasei_Logo.png" alt="LogoAkasei">
+</div>
+<div class="nav-links" id="menu">
+<a href="#home">Home</a>
+<a href="#jasa">Jasa</a>
+<a href="#order">Order</a>
+<a href="#mitra">Mitra</a>
+</div>
+<div class="menu-right">
+<div class="dark-toggle" onclick="toggleDark()">🌙</div>
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+</div>
+</div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+<h1 data-aos="fade-up">Layanan Digital Creative</h1>
+<p data-aos="fade-up" data-aos-delay="200">
+sudah lebih dari 1000 Project telah kami kerjakan, kualiatas mahal harga merakyat.
+</p>
+</section>
+
+<!-- JASA -->
+<section id="jasa" class="section">
+<h2 class="title">Marketplace Jasa</h2>
+
+<div class="filter">
+<button onclick="filterService('all')">All</button>
+<button onclick="filterService('audio')">Audio</button>
+<button onclick="filterService('video')">Video</button>
+<button onclick="filterService('arrangement')">Arrangement</button>
+</div>
+
+<div class="grid">
+  <div class="card audio" data-aos="zoom-in">
+    <div class="service-img"></div>
+    <h3><a href="#detail-MixingVocal">Mixing Vocal</a></h3>
+    <div class="price">Rp150.000</div>
+  </div>
+
+  <div class="card audio" data-aos="zoom-in">
+    <div class="service-img"></div>
+    <h3><a href="#detail-Mastering">Mastering Lagu</a></h3>
+    <div class="price">Rp100.000</div>
+  </div>
+
+  <div class="card video" data-aos="zoom-in">
+    <div class="service-img"></div>
+    <h3><a href="#detail-VideoEditing">Video Editing</a></h3>
+    <div class="price">Rp250.000</div>
+  </div>
+
+  <div class="card video" data-aos="zoom-in">
+    <div class="service-img"></div>
+    <h3><a href="#detail-LyricVideo">Lyric Video</a></h3>
+    <div class="price">Rp300.000</div>
+  </div>
+
+  <div class="card arrangement" data-aos="zoom-in">
+    <div class="service-img"></div>
+    <h3><a href="#detail-Arrangement">Arrangement</a></h3>
+    <div class="price">Rp200.000</div>
+  </div>
+</div>
+</section>
+
+<section id="detail-MixingVocal" class="section" style="background:#f0f9ff;">
+<h2>Mixing Vocal</h2>
+<p>Layanan Mixing Vocal profesional agar suara vokal terdengar clear dan harmonis dengan instrumen.</p>
+<div class="price">Rp150.000</div>
+<div class="btn" onclick="pilihJasa('Mixing Vocal')">Order Sekarang</div>
+</section>
+
+<section id="detail-Mastering" class="section" style="background:#e0f2fe;">
+<h2>Mastering Lagu</h2>
+<p>Mastering lagu agar terdengar maksimal di semua platform streaming, kualitas studio profesional.</p>
+<div class="price">Rp100.000</div>
+<div class="btn" onclick="pilihJasa('Mastering')">Order Sekarang</div>
+</section>
+
+<section id="detail-VideoEditing" class="section" style="background:#f0f9ff;">
+<h2>Video Editing</h2>
+<p>Editing video profesional, cutting, transisi, efek, sesuai kebutuhan promosi atau musik.</p>
+<div class="price">Rp250.000</div>
+<div class="btn" onclick="pilihJasa('Video Editing')">Order Sekarang</div>
+</section>
+
+<section id="detail-LyricVideo" class="section" style="background:#e0f2fe;">
+<h2>Lyric Video</h2>
+<p>Buat lyric video dengan style modern, cocok untuk upload YouTube atau sosial media.</p>
+<div class="price">Rp300.000</div>
+<div class="btn" onclick="pilihJasa('Lyric Video')">Order Sekarang</div>
+</section>
+
+<section id="detail-Arrangement" class="section" style="background:#f0f9ff;">
+<h2>Arrangement</h2>
+<p>Layanan arrangement musik: susunan instrumen, chord progression, dan struktur lagu profesional.</p>
+<div class="price">Rp200.000</div>
+<div class="btn" onclick="pilihJasa('Arrangement')">Order Sekarang</div>
+</section>
+
+<!-- MODAL DETAIL PAGE -->
+<div id="detailPage" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:2000;overflow:auto;">
+<div style="max-width:700px;margin:80px auto;background:white;padding:30px;border-radius:12px;position:relative;">
+<span style="position:absolute;top:15px;right:20px;font-size:25px;cursor:pointer;" onclick="closeDetail()">×</span>
+<h2 id="detailTitle"></h2>
+<p id="detailDesc" style="margin:20px 0;"></p>
+<div id="detailPrice" style="font-weight:bold;color:#2563eb;margin-bottom:20px;"></div>
+<button class="btn" onclick="pilihJasaDetail()">Order Sekarang</button>
+</div>
+</div>
+
+
+<!-- MITRA -->
+
+
+
+<section id="mitra" class="mitra-section">
+<h2 class="title" data-aos="fade-up">Mitra Tersedia</h2>
+<div class="mitra-grid">
+  <div class="mitra-card" data-aos="fade-up">
+    <h4><a href="#detail-MitraA">Mitra A</a></h4>
+    <div class="stars" id="starA">0</div>
+    <button class="btn" onclick="rateMitra('A')">Beri Rating +1</button>
+  </div>
+  <div class="mitra-card" data-aos="fade-up" data-aos-delay="100">
+    <h4><a href="#detail-MitraB">Mitra B</a></h4>
+    <div class="stars" id="starB">0</div>
+    <button class="btn" onclick="rateMitra('B')">Beri Rating +1</button>
+  </div>
+  <div class="mitra-card" data-aos="fade-up" data-aos-delay="200">
+    <h4><a href="#detail-MitraC">Mitra C</a></h4>
+    <div class="stars" id="starC">0</div>
+    <button class="btn" onclick="rateMitra('C')">Beri Rating +1</button>
+  </div>
+</div>
+</section>
+
+<section id="detail-MitraA" class="section" style="background:#f0f9ff;">
+<h2>Mitra A</h2>
+<p>Layanan: Mixing, Mastering, Audio Editing</p>
+<div class="price">Harga: Rp150.000 – Rp300.000</div>
+<div class="portfolio">
+  <h4>Portofolio:</h4>
+  <div style="display:flex;justify-content:center;gap:10px;">
+    <img src="portfolio1.jpg" style="width:150px;border-radius:8px;">
+    <img src="portfolio2.jpg" style="width:150px;border-radius:8px;">
+    <img src="portfolio3.jpg" style="width:150px;border-radius:8px;">
+  </div>
+</div>
+<div class="btn" onclick="pilihMitra('Mitra A')">Order Mitra Ini</div>
+</section>
+
+<section id="detail-MitraB" class="section" style="background:#e0f2fe;">
+<h2>Mitra B</h2>
+<p>Layanan: Video Editing, Lyric Video, Arrangement</p>
+<div class="price">Harga: Rp200.000 – Rp350.000</div>
+<div class="portfolio">
+  <h4>Portofolio:</h4>
+  <div style="display:flex;justify-content:center;gap:10px;">
+    <img src="portfolio1.jpg" style="width:150px;border-radius:8px;">
+    <img src="portfolio2.jpg" style="width:150px;border-radius:8px;">
+    <img src="portfolio3.jpg" style="width:150px;border-radius:8px;">
+  </div>
+</div>
+<div class="btn" onclick="pilihMitra('Mitra B')">Order Mitra Ini</div>
+</section>
+
+<section id="detail-MitraC" class="section" style="background:#f0f9ff;">
+<h2>Mitra C</h2>
+<p>Layanan: Vocal Arrangement, Audio Mixing, Mastering</p>
+<div class="price">Harga: Rp150.000 – Rp300.000</div>
+<div class="portfolio">
+  <h4>Portofolio:</h4>
+  <div style="display:flex;justify-content:center;gap:10px;">
+    <img src="portfolio1.jpg" style="width:150px;border-radius:8px;">
+    <img src="portfolio2.jpg" style="width:150px;border-radius:8px;">
+    <img src="portfolio3.jpg" style="width:150px;border-radius:8px;">
+  </div>
+</div>
+<div class="btn" onclick="pilihMitra('Mitra C')">Order Mitra Ini</div>
+</section>
+
+<!-- ORDER -->
+<section id="order" class="section">
+<h2 class="title">Order Jasa</h2>
+<div class="form-box">
+<input id="nama" placeholder="Nama lengkap">
+<input id="wa" placeholder="Nomor WhatsApp">
+<input id="jasaInput" placeholder="Jenis jasa">
+<select id="mitra">
+<option>Pilih Mitra</option>
+<option>Mitra A</option>
+<option>Mitra B</option>
+<option>Mitra C</option>
+</select>
+<textarea id="catatan" placeholder="Catatan"></textarea>
+<button class="submit" onclick="kirimWA()">Kirim Order</button>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<p>© 2026 Akasei Creative Marketplace | Lokasi: Palu, Sulawesi Tengah</p>
+<div class="socials">
+<a href="https://www.youtube.com/@AkaseiEntertaiment" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+<a href="https://www.tiktok.com/@akaseicreative" target="_blank"><i class="fab fa-tiktok"></i></a>
+<a href="https://x.com/AkaseiCreative" target="_blank"><i class="fab fa-twitter"></i></a>
+</div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init()
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("show")
+}
+
+function toggleDark(){
+document.body.classList.toggle("dark")
+}
+
+// Filter jasa
+function filterService(kategori){
+let cards=document.querySelectorAll(".card")
+cards.forEach(card=>{
+if(kategori=="all") card.style.display="block"
+else if(card.classList.contains(kategori)) card.style.display="block"
+else card.style.display="none"
+})
+}
+
+// Order
+function pilihJasa(nama){
+document.getElementById("jasaInput").value = nama
+location.href="#order"
+}
+
+function kirimWA(){
+let nama=document.getElementById("nama").value
+let wa=document.getElementById("wa").value
+let jasa=document.getElementById("jasaInput").value
+let mitra=document.getElementById("mitra").value
+let catatan=document.getElementById("catatan").value
+let text=`Halo saya ingin order jasa
+
+Nama: ${nama}
+WA: ${wa}
+Jasa: ${jasa}
+Mitra: ${mitra}
+
+Catatan: ${catatan}`
+
+let url=`https://wa.me/628123456789?text=${encodeURIComponent(text)}`
+window.open(url)
+}
+
+// Rating mitra
+let ratingData={A:0,B:0,C:0}
+
+function rateMitra(id){
+    if(ratingData[id] < 1){
+        ratingData[id] += 1
+    } else {
+        ratingData[id] -= 1
+    }
+    let stars='⭐'.repeat(ratingData[id])
+    document.getElementById('star'+id).innerText = stars + ' (' + ratingData[id] + ')'
+}
+
+function pilihJasa(nama){
+  document.getElementById("jasaInput").value = nama;
+  location.href="#order"; // scroll ke form order
+}
+
+function pilihMitra(namaMitra){
+  document.getElementById("mitra").value = namaMitra; // isi dropdown form order
+  location.href="#order"; // scroll ke form order
+}
+</script>
+
+</body>
+</html>
